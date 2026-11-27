@@ -1,93 +1,132 @@
-    <script>
-        const products = [
-            { id: 1, name: "Amplang Kuku Macan Asli", category: "Makanan Ringan", price: 25000, icon: "🐟", desc: "Kerupuk ikan tenggiri khas Balikpapan yang renyah dan gurih (200gr)." },
-            { id: 2, name: "Keripik Singkong Balado", category: "Makanan Ringan", price: 15000, icon: "🥔", desc: "Singkong pilihan dengan bumbu balado pedas manis tanpa pengawet." },
-            { id: 3, name: "Kopi Liberika Borneo", category: "Minuman", price: 45000, icon: "☕", desc: "Biji kopi sangrai khas Kalimantan dengan aroma nangka yang unik (250gr)." },
-            { id: 4, name: "Sirup Mangrove Segar", category: "Minuman", price: 30000, icon: "🍹", desc: "Minuman kesehatan olahan buah mangrove pedada kaya antioksidan." },
-            { id: 5, name: "Sambal Raja Kutai", category: "Sambal & Bumbu", price: 28000, icon: "🌶️", desc: "Sambal khas kerajaan Kutai dengan campuran terong dan kacang panjang." },
-            { id: 6, name: "Abon Kepiting Balikpapan", category: "Sambal & Bumbu", price: 55000, icon: "🦀", desc: "Abon daging kepiting murni 100% tanpa campuran, cocok untuk lauk." }
-        ];
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borneo Rasa - Katalog UMKM</title>
+<style>
+body{font-family:Arial,sans-serif;margin:0;background:#f9fafb;color:#1f2937}
+header{background:#fff;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.08);position:sticky;top:0}
+.logo{font-size:22px;font-weight:bold;color:#d97706}
+.cart-btn{background:#d97706;color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
+.hero{background:#fef3c7;padding:40px 20px;text-align:center}
+.container{max-width:1000px;margin:25px auto;padding:0 15px}
+.controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:20px}
+.cat-btn{padding:8px 14px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}
+.cat-btn.active{background:#d97706;color:#fff;border-color:#d97706}
+.search{padding:8px 12px;border:1px solid #ddd;border-radius:8px;width:240px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
+.card{background:#fff;border-radius:10px;padding:15px;box-shadow:0 2px 6px rgba(0,0,0,.06);display:flex;flex-direction:column}
+.icon{font-size:48px;text-align:center;background:#fef3c7;padding:20px;border-radius:8px;margin-bottom:10px}
+.cat{font-size:11px;color:#d97706;font-weight:bold;text-transform:uppercase}
+.desc{font-size:13px;color:#6b7280;flex:1;margin:6px 0 12px}
+.footer-card{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:10px}
+.add-btn{background:#1f2937;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;justify-content:flex-end}
+.modal.open{display:flex}
+.drawer{background:#fff;width:360px;max-width:100%;height:100%;padding:20px;display:flex;flex-direction:column;overflow-y:auto}
+.item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee}
+.wa-btn{width:100%;background:#16a34a;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:10px}
+input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box}
+footer{background:#1f2937;color:#fff;text-align:center;padding:20px;margin-top:40px;font-size:13px}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">BorneoRasa UMKM</div>
+  <button class="cart-btn" onclick="toggleCart()">🛒 Keranjang (<span id="count">0</span>)</button>
+</header>
+<div class="hero">
+  <h1>Produk Unggulan UMKM Balikpapan</h1>
+  <p>Pilih produk favorit Anda dan pesan langsung via WhatsApp penjual.</p>
+</div>
+<div class="container">
+  <div class="controls">
+    <div>
+      <button class="cat-btn active" onclick="setCat('Semua',this)">Semua</button>
+      <button class="cat-btn" onclick="setCat('Makanan',this)">Makanan</button>
+      <button class="cat-btn" onclick="setCat('Minuman',this)">Minuman</button>
+      <button class="cat-btn" onclick="setCat('Bumbu',this)">Bumbu</button>
+    </div>
+    <input type="text" id="q" class="search" placeholder="Cari produk..." onkeyup="render()">
+  </div>
+  <div class="grid" id="list"></div>
+</div>
+<div class="modal" id="modal">
+  <div class="drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <h3>Keranjang Belanja</h3>
+      <button onclick="toggleCart()" style="border:none;background:none;font-size:22px;cursor:pointer">&times;</button>
+    </div>
+    <div id="cart-list" style="flex:1;margin:15px 0"></div>
+    <div>
+      <h4>Total: <span id="total">Rp 0</span></h4>
+      <input type="text" id="nama" placeholder="Nama Anda">
+      <textarea id="alamat" rows="2" placeholder="Alamat Pengiriman"></textarea>
+      <button class="wa-btn" onclick="kirimWA()">Pesan via WhatsApp</button>
+    </div>
+  </div>
+</div>
+<footer>&copy; 2026 BorneoRasa UMKM Balikpapan - Tugas UAS Sistem Informasi</footer>
+<script>
+const data=[
+  {id:1,nama:"Amplang Kuku Macan",kat:"Makanan",harga:25000,ikon:"🐟",desk:"Kerupuk ikan tenggiri khas Balikpapan 200gr."},
+  {id:2,nama:"Keripik Singkong Balado",kat:"Makanan",harga:15000,ikon:"🥔",desk:"Keripik singkong renyah bumbu balado pedas manis."},
+  {id:3,nama:"Kopi Liberika Borneo",kat:"Minuman",harga:45000,ikon:"☕",desk:"Kopi sangrai khas Kalimantan aroma unik 250gr."},
+  {id:4,nama:"Sirup Mangrove Segar",kat:"Minuman",harga:30000,ikon:"🍹",desk:"Minuman segar olahan buah mangrove pedada."},
+  {id:5,nama:"Sambal Raja Kutai",kat:"Bumbu",harga:28000,ikon:"🌶️",desk:"Sambal khas Kutai dengan terong dan kacang panjang."},
+  {id:6,nama:"Abon Kepiting Balikpapan",kat:"Bumbu",harga:55000,ikon:"🦀",desk:"Abon daging kepiting murni 100% tanpa campuran."}
+];
+const WA="6281234567890";
+let cart=[],katAktif="Semua";
+const rp=n=>"Rp "+n.toLocaleString("id-ID");
 
-        const SELLER_WHATSAPP = "6281234567890";
-        let cart = [];
-        let currentCategory = "Semua";
-
-        function formatRupiah(angka) { return "Rp " + angka.toLocaleString("id-ID"); }
-
-        function renderProducts(data) {
-            const list = document.getElementById("product-list");
-            list.innerHTML = "";
-            if (data.length === 0) { list.innerHTML = "<p>Produk tidak ditemukan.</p>"; return; }
-            data.forEach(item => {
-                list.innerHTML += `<div class="card"><div class="card-img">${item.icon}</div><div class="card-body"><span class="card-cat">${item.category}</span><h3 class="card-title">${item.name}</h3><p class="card-desc">${item.desc}</p><div class="card-footer"><span class="price">${formatRupiah(item.price)}</span><button class="add-btn" onclick="addToCart(${item.id})">+ Keranjang</button></div></div></div>`;
-            });
-        }
-
-        function filterCategory(category, btn) {
-            currentCategory = category;
-            document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            applyFilter();
-        }
-
-        function searchProduct() { applyFilter(); }
-
-        function applyFilter() {
-            const keyword = document.getElementById("search-input").value.toLowerCase();
-            const filtered = products.filter(p => (currentCategory === "Semua" || p.category === currentCategory) && (p.name.toLowerCase().includes(keyword) || p.desc.toLowerCase().includes(keyword)));
-            renderProducts(filtered);
-        }
-
-        function addToCart(id) {
-            const product = products.find(p => p.id === id);
-            const existing = cart.find(item => item.id === id);
-            if (existing) { existing.qty += 1; } else { cart.push({ ...product, qty: 1 }); }
-            updateCartUI();
-        }
-
-        function changeQty(id, delta) {
-            const index = cart.findIndex(item => item.id === id);
-            if (index !== -1) {
-                cart[index].qty += delta;
-                if (cart[index].qty <= 0) { cart.splice(index, 1); }
-            }
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const cartItemsEl = document.getElementById("cart-items");
-            const cartCountEl = document.getElementById("cart-count");
-            const cartTotalEl = document.getElementById("cart-total");
-            const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
-            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-            cartCountEl.textContent = totalQty;
-            cartTotalEl.textContent = formatRupiah(totalPrice);
-            if (cart.length === 0) { cartItemsEl.innerHTML = `<p style="color: var(--gray); text-align: center; margin-top: 2rem;">Keranjang masih kosong.</p>`; return; }
-            cartItemsEl.innerHTML = "";
-            cart.forEach(item => {
-                cartItemsEl.innerHTML += `<div class="cart-item"><div class="item-info"><h4>${item.name}</h4><p>${formatRupiah(item.price)} x ${item.qty}</p></div><div class="qty-controls"><button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button><span>${item.qty}</span><button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button></div></div>`;
-            });
-        }
-
-        function toggleCart() { document.getElementById("cart-modal").classList.toggle("open"); }
-
-        function checkoutWhatsApp() {
-            if (cart.length === 0) { alert("Keranjang belanja Anda masih kosong!"); return; }
-            const name = document.getElementById("buyer-name").value.trim();
-            const address = document.getElementById("buyer-address").value.trim();
-            if (!name || !address) { alert("Harap isi Nama Pemesan dan Alamat Pengiriman terlebih dahulu."); return; }
-            let message = `Halo *BorneoRasa UMKM*, saya ingin memesan:\n\n`;
-            let total = 0;
-            cart.forEach((item, index) => {
-                const subtotal = item.price * item.qty;
-                total += subtotal;
-                message += `${index + 1}. ${item.name} (${item.qty}x) = ${formatRupiah(subtotal)}\n`;
-            });
-            message += `\n*Total Pembayaran: ${formatRupiah(total)}*\n\n*Data Pemesan:*\nNama: ${name}\nAlamat: ${address}`;
-            window.open(`https://wa.me{SELLER_WHATSAPP}?text=${encodeURIComponent(message)}`, "_blank");
-        }
-
-        renderProducts(products);
-    </script>
+function setCat(k,btn){
+  katAktif=k;
+  document.querySelectorAll(".cat-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  render();
+}
+function render(){
+  const q=document.getElementById("q").value.toLowerCase();
+  const hasil=data.filter(p=>(katAktif==="Semua"||p.kat===katAktif)&&p.nama.toLowerCase().includes(q));
+  document.getElementById("list").innerHTML=hasil.map(p=>`
+    <div class="card">
+      <div class="icon">${p.ikon}</div>
+      <span class="cat">${p.kat}</span>
+      <h3>${p.nama}</h3>
+      <p class="desc">${p.desk}</p>
+      <div class="footer-card"><b>${rp(p.harga)}</b><button class="add-btn" onclick="tambah(${p.id})">+ Keranjang</button></div>
+    </div>`).join("")||"<p>Produk tidak ditemukan.</p>";
+}
+function tambah(id){
+  const ada=cart.find(c=>c.id===id);
+  if(ada)ada.qty++; else cart.push({...data.find(p=>p.id===id),qty:1});
+  updateCart();
+}
+function ubah(id,d){
+  const i=cart.findIndex(c=>c.id===id);
+  cart[i].qty+=d;
+  if(cart[i].qty<=0)cart.splice(i,1);
+  updateCart();
+}
+function updateCart(){
+  document.getElementById("count").innerText=cart.reduce((s,c)=>s+c.qty,0);
+  document.getElementById("total").innerText=rp(cart.reduce((s,c)=>s+c.harga*c.qty,0));
+  document.getElementById("cart-list").innerHTML=cart.length?cart.map(c=>`
+    <div class="item">
+      <div><b>${c.nama}</b><br><small>${rp(c.harga)} x ${c.qty}</small></div>
+      <div><button onclick="ubah(${c.id},-1)">-</button> ${c.qty} <button onclick="ubah(${c.id},1)">+</button></div>
+    </div>`).join(""):"<p>Keranjang kosong.</p>";
+}
+function toggleCart(){document.getElementById("modal").classList.toggle("open");}
+function kirimWA(){
+  const n=document.getElementById("nama").value,a=document.getElementById("alamat").value;
+  if(!cart.length||!n||!a)return alert("Isi keranjang, nama, dan alamat terlebih dahulu!");
+  let teks=`Halo BorneoRasa, saya pesan:\n`+cart.map((c,i)=>`${i+1}. ${c.nama} (${c.qty}x) = ${rp(c.harga*c.qty)}`).join("\n")+`\nTotal: ${document.getElementById("total").innerText}\nNama: ${n}\nAlamat: ${a}`;
+  window.open(`https://wa.me{WA}?text=${encodeURIComponent(teks)}`,"_blank");
+}
+render();updateCart();
+</script>
 </body>
 </html>
