@@ -137,3 +137,12 @@ function loadRev(){
   document.getElementById("rev-list").innerHTML=l.map(r=>`<div class="rev-item"><b>${r.n}</b> ${r.b}<p style="margin:4px 0 0;font-size:13px">${r.i}</p></div>`).join("");
 }
 function kirimRev(){
+  const n=document.getElementById("rn").value.trim(),b=document.getElementById("rb").value,i=document.getElementById("ri").value.trim();
+  if(!n||!i)return alert("Isi nama dan ulasan!");
+  const l=JSON.parse(localStorage.getItem("rev_br"))||defRev;l.unshift({n,b,i});
+  localStorage.setItem("rev_br",JSON.stringify(l));document.getElementById("rn").value="";document.getElementById("ri").value="";loadRev();
+}
+tampil();updateCart();loadRev();
+</script>
+</body>
+</html>
