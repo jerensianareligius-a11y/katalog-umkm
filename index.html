@@ -3,32 +3,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Borneo Rasa - Katalog UMKM</title>
+<title>BorneoRasa - Katalog UMKM Balikpapan</title>
 <style>
-body{font-family:Arial,sans-serif;margin:0;background:#f9fafb;color:#1f2937}
-header{background:#fff;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.08);position:sticky;top:0}
+body{font-family:Arial,sans-serif;margin:0;background:#f9fafb;color:#1f2937;line-height:1.5}
+header{background:#fff;padding:15px 25px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 6px rgba(0,0,0,.08);position:sticky;top:0;z-index:50}
 .logo{font-size:22px;font-weight:bold;color:#d97706}
 .cart-btn{background:#d97706;color:#fff;border:none;padding:10px 16px;border-radius:8px;cursor:pointer;font-weight:bold}
-.hero{background:#fef3c7;padding:40px 20px;text-align:center}
-.container{max-width:1000px;margin:25px auto;padding:0 15px}
+.hero{background:linear-gradient(135deg,#fef3c7,#fde68a);padding:40px 20px;text-align:center}
+.container{max-width:1050px;margin:25px auto;padding:0 15px}
 .controls{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;margin-bottom:20px}
 .cat-btn{padding:8px 14px;border:1px solid #ddd;background:#fff;border-radius:20px;cursor:pointer}
 .cat-btn.active{background:#d97706;color:#fff;border-color:#d97706}
 .search{padding:8px 12px;border:1px solid #ddd;border-radius:8px;width:240px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:18px}
 .card{background:#fff;border-radius:10px;padding:15px;box-shadow:0 2px 6px rgba(0,0,0,.06);display:flex;flex-direction:column}
-.icon{font-size:48px;text-align:center;background:#fef3c7;padding:20px;border-radius:8px;margin-bottom:10px}
+.icon{font-size:48px;text-align:center;background:#fef3c7;padding:20px;border-radius:8px;margin-bottom:10px;cursor:pointer}
 .cat{font-size:11px;color:#d97706;font-weight:bold;text-transform:uppercase}
-.desc{font-size:13px;color:#6b7280;flex:1;margin:6px 0 12px}
-.footer-card{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:10px}
-.add-btn{background:#1f2937;color:#fff;border:none;padding:6px 12px;border-radius:6px;cursor:pointer}
-.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;justify-content:flex-end}
+.card h3{margin:5px 0;cursor:pointer}
+.card h3:hover{color:#d97706}
+.stok-tag{font-size:12px;color:#16a34a;font-weight:bold;margin-bottom:6px}
+.desc{font-size:13px;color:#6b7280;flex:1;margin-bottom:12px}
+.footer-card{display:flex;justify-content:space-between;align-items:center;border-top:1px solid #eee;padding-top:10px;gap:5px}
+.btn-detail{background:#f3f4f6;color:#1f2937;border:1px solid #d1d5db;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px}
+.add-btn{background:#1f2937;color:#fff;border:none;padding:6px 10px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:bold}
+.add-btn:hover{background:#d97706}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;justify-content:flex-end;z-index:100}
+.modal.center{justify-content:center;align-items:center;padding:15px}
 .modal.open{display:flex}
-.drawer{background:#fff;width:360px;max-width:100%;height:100%;padding:20px;display:flex;flex-direction:column;overflow-y:auto}
+.drawer{background:#fff;width:390px;max-width:100%;height:100%;padding:20px;display:flex;flex-direction:column;overflow-y:auto}
+.box-popup{background:#fff;width:440px;max-width:100%;border-radius:12px;padding:22px;position:relative}
 .item{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #eee}
-.wa-btn{width:100%;background:#16a34a;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:10px}
-input,textarea{width:100%;padding:8px;margin:5px 0 10px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box}
+.wa-btn{width:100%;background:#16a34a;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:bold;cursor:pointer;margin-top:8px;font-size:15px}
+input,textarea,select{width:100%;padding:8px;margin:4px 0 10px;border:1px solid #ddd;border-radius:6px;box-sizing:border-box;font-family:inherit}
+label{font-size:12px;font-weight:bold;color:#374151}
+.review-sec{margin-top:50px;background:#fff;padding:25px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.review-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:25px;margin-top:15px}
+.review-card{background:#f9fafb;padding:12px 15px;border-radius:8px;border-left:4px solid #d97706;margin-bottom:10px}
 footer{background:#1f2937;color:#fff;text-align:center;padding:20px;margin-top:40px;font-size:13px}
+@media(max-width:700px){.review-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -36,10 +48,12 @@ footer{background:#1f2937;color:#fff;text-align:center;padding:20px;margin-top:4
   <div class="logo">BorneoRasa UMKM</div>
   <button class="cart-btn" onclick="toggleCart()">🛒 Keranjang (<span id="count">0</span>)</button>
 </header>
+
 <div class="hero">
   <h1>Produk Unggulan UMKM Balikpapan</h1>
-  <p>Pilih produk favorit Anda dan pesan langsung via WhatsApp penjual.</p>
+  <p>Klik produk untuk melihat detail komposisi & stok, atau langsung tambahkan ke keranjang belanja.</p>
 </div>
+
 <div class="container">
   <div class="controls">
     <div>
@@ -51,31 +65,82 @@ footer{background:#1f2937;color:#fff;text-align:center;padding:20px;margin-top:4
     <input type="text" id="q" class="search" placeholder="Cari produk..." onkeyup="render()">
   </div>
   <div class="grid" id="list"></div>
-</div>
-<div class="modal" id="modal">
-  <div class="drawer">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <h3>Keranjang Belanja</h3>
-      <button onclick="toggleCart()" style="border:none;background:none;font-size:22px;cursor:pointer">&times;</button>
-    </div>
-    <div id="cart-list" style="flex:1;margin:15px 0"></div>
-    <div>
-      <h4>Total: <span id="total">Rp 0</span></h4>
-      <input type="text" id="nama" placeholder="Nama Anda">
-      <textarea id="alamat" rows="2" placeholder="Alamat Pengiriman"></textarea>
-      <button class="wa-btn" onclick="kirimWA()">Pesan via WhatsApp</button>
+
+  <!-- Bagian Ulasan Pembeli -->
+  <div class="review-sec">
+    <h2>⭐ Ulasan & Testimoni Pelanggan</h2>
+    <div class="review-grid">
+      <div>
+        <label>Nama Anda</label>
+        <input type="text" id="rev-nama" placeholder="Contoh: Rensiana">
+        <label>Rating Produk</label>
+        <select id="rev-bintang">
+          <option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐ (5/5 - Sangat Puas)</option>
+          <option value="⭐⭐⭐⭐">⭐⭐⭐⭐ (4/5 - Puas)</option>
+          <option value="⭐⭐⭐">⭐⭐⭐ (3/5 - Cukup)</option>
+        </select>
+        <label>Komentar / Ulasan</label>
+        <textarea id="rev-isi" rows="3" placeholder="Tulis pengalaman belanja Anda..."></textarea>
+        <button class="cart-btn" style="width:100%" onclick="tambahUlasan()">Kirim Ulasan</button>
+      </div>
+      <div id="review-list"></div>
     </div>
   </div>
 </div>
+
+<!-- Modal Detail Produk & Stok -->
+<div class="modal center" id="detail-modal">
+  <div class="box-popup">
+    <button onclick="tutupDetail()" style="position:absolute;right:15px;top:12px;border:none;background:none;font-size:24px;cursor:pointer">&times;</button>
+    <div id="detail-body"></div>
+  </div>
+</div>
+
+<!-- Drawer Keranjang + Ongkir + Pembayaran -->
+<div class="modal" id="modal">
+  <div class="drawer">
+    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #eee;padding-bottom:10px">
+      <h3>Keranjang Belanja</h3>
+      <button onclick="toggleCart()" style="border:none;background:none;font-size:24px;cursor:pointer">&times;</button>
+    </div>
+    <div id="cart-list" style="flex:1;margin:10px 0;overflow-y:auto"></div>
+    <div style="border-top:2px solid #eee;padding-top:10px">
+      <label>Area Pengiriman (Ongkir)</label>
+      <select id="ongkir" onchange="updateCart()">
+        <option value="10000">Balikpapan Kota (Rp 10.000)</option>
+        <option value="20000">Balikpapan Luar / Samarinda (Rp 20.000)</option>
+        <option value="0">Ambil Sendiri di Toko (Gratis)</option>
+      </select>
+      <label>Metode Pembayaran</label>
+      <select id="metode">
+        <option value="QRIS (Scan Instan)">QRIS (Dana / GoPay / m-Banking)</option>
+        <option value="Transfer Bank (BCA / Mandiri)">Transfer Bank (BCA / Mandiri)</option>
+        <option value="COD (Bayar di Tempat)">COD (Bayar di Tempat)</option>
+      </select>
+      <label>Nama Pemesan</label>
+      <input type="text" id="nama" placeholder="Masukkan nama lengkap">
+      <label>Alamat Lengkap</label>
+      <textarea id="alamat" rows="2" placeholder="Jalan, RT/RW, Kelurahan..."></textarea>
+      <div style="background:#fef3c7;padding:10px;border-radius:6px;margin:8px 0;font-size:14px">
+        <div>Subtotal: <b id="sub">Rp 0</b></div>
+        <div>Ongkir: <b id="ongkir-txt">Rp 10.000</b></div>
+        <div style="font-size:16px;color:#b45309;margin-top:4px">Total Bayar: <b id="total">Rp 0</b></div>
+      </div>
+      <button class="wa-btn" onclick="kirimWA()">Checkout via WhatsApp</button>
+    </div>
+  </div>
+</div>
+
 <footer>&copy; 2026 BorneoRasa UMKM Balikpapan - Tugas UAS Sistem Informasi</footer>
+
 <script>
 const data=[
-  {id:1,nama:"Amplang Kuku Macan",kat:"Makanan",harga:25000,ikon:"🐟",desk:"Kerupuk ikan tenggiri khas Balikpapan 200gr."},
-  {id:2,nama:"Keripik Singkong Balado",kat:"Makanan",harga:15000,ikon:"🥔",desk:"Keripik singkong renyah bumbu balado pedas manis."},
-  {id:3,nama:"Kopi Liberika Borneo",kat:"Minuman",harga:45000,ikon:"☕",desk:"Kopi sangrai khas Kalimantan aroma unik 250gr."},
-  {id:4,nama:"Sirup Mangrove Segar",kat:"Minuman",harga:30000,ikon:"🍹",desk:"Minuman segar olahan buah mangrove pedada."},
-  {id:5,nama:"Sambal Raja Kutai",kat:"Bumbu",harga:28000,ikon:"🌶️",desk:"Sambal khas Kutai dengan terong dan kacang panjang."},
-  {id:6,nama:"Abon Kepiting Balikpapan",kat:"Bumbu",harga:55000,ikon:"🦀",desk:"Abon daging kepiting murni 100% tanpa campuran."}
+  {id:1,nama:"Amplang Kuku Macan",kat:"Makanan",harga:25000,stok:18,berat:"200 gram",bahan:"Ikan tenggiri segar, tepung tapioka, telur, bawang putih, garam.",ikon:"🐟",desk:"Kerupuk ikan tenggiri khas Balikpapan yang renyah dan gurih."},
+  {id:2,nama:"Keripik Singkong Balado",kat:"Makanan",harga:15000,stok:25,berat:"250 gram",bahan:"Singkong pilihan, cabai merah, gula aren, bawang putih, minyak nabati.",ikon:"🥔",desk:"Keripik singkong renyah dengan bumbu balado pedas manis tanpa pengawet."},
+  {id:3,nama:"Kopi Liberika Borneo",kat:"Minuman",harga:45000,stok:12,berat:"250 gram",bahan:"100% biji kopi Liberika pilihan asal Kalimantan Timur (Medium Roast).",ikon:"☕",desk:"Biji kopi sangrai khas Kalimantan dengan aroma nangka yang unik."},
+  {id:4,nama:"Sirup Mangrove Segar",kat:"Minuman",harga:30000,stok:15,berat:"500 ml",bahan:"Sari buah mangrove pedada (Sonneratia caseolaris), gula pasir murni, air.",ikon:"🍹",desk:"Minuman kesehatan olahan buah mangrove kaya vitamin C dan antioksidan."},
+  {id:5,nama:"Sambal Raja Kutai",kat:"Bumbu",harga:28000,stok:10,berat:"200 gram",bahan:"Cabai rawit, terong ungu, kacang panjang, bawang merah, terasi udang.",ikon:"🌶️",desk:"Sambal khas kerajaan Kutai dengan campuran sayuran segar."},
+  {id:6,nama:"Abon Kepiting Balikpapan",kat:"Bumbu",harga:55000,stok:8,berat:"150 gram",bahan:"Daging kepiting bakau murni, santan kelapa, lengkuas, serai, rempah pilihan.",ikon:"🦀",desk:"Abon daging kepiting murni 100% tanpa campuran, cocok untuk lauk."}
 ];
 const WA="6281234567890";
 let cart=[],katAktif="Semua";
@@ -92,41 +157,73 @@ function render(){
   const hasil=data.filter(p=>(katAktif==="Semua"||p.kat===katAktif)&&p.nama.toLowerCase().includes(q));
   document.getElementById("list").innerHTML=hasil.map(p=>`
     <div class="card">
-      <div class="icon">${p.ikon}</div>
+      <div class="icon" onclick="bukaDetail(${p.id})">${p.ikon}</div>
       <span class="cat">${p.kat}</span>
-      <h3>${p.nama}</h3>
+      <h3 onclick="bukaDetail(${p.id})">${p.nama}</h3>
+      <div class="stok-tag">Stok: ${p.stok} pcs</div>
       <p class="desc">${p.desk}</p>
-      <div class="footer-card"><b>${rp(p.harga)}</b><button class="add-btn" onclick="tambah(${p.id})">+ Keranjang</button></div>
+      <div class="footer-card">
+        <b>${rp(p.harga)}</b>
+        <div>
+          <button class="btn-detail" onclick="bukaDetail(${p.id})">Detail</button>
+          <button class="add-btn" onclick="tambah(${p.id})">+ Keranjang</button>
+        </div>
+      </div>
     </div>`).join("")||"<p>Produk tidak ditemukan.</p>";
 }
+function bukaDetail(id){
+  const p=data.find(x=>x.id===id);
+  document.getElementById("detail-body").innerHTML=`
+    <div style="font-size:60px;text-align:center;background:#fef3c7;padding:20px;border-radius:10px;margin-bottom:12px">${p.ikon}</div>
+    <span class="cat">${p.kat}</span>
+    <h2 style="margin:4px 0">${p.nama}</h2>
+    <p style="font-size:18px;font-weight:bold;color:#d97706;margin-bottom:10px">${rp(p.harga)}</p>
+    <p style="font-size:14px;margin-bottom:8px"><b>Berat Bersih:</b> ${p.berat} | <b>Sisa Stok:</b> ${p.stok} pcs</p>
+    <p style="font-size:14px;margin-bottom:8px"><b>Komposisi Bahan:</b><br>${p.bahan}</p>
+    <p style="font-size:14px;color:#4b5563;margin-bottom:15px">${p.desk}</p>
+    <button class="cart-btn" style="width:100%" onclick="tambah(${p.id});tutupDetail()">+ Masukkan ke Keranjang</button>`;
+  document.getElementById("detail-modal").classList.add("open");
+}
+function tutupDetail(){document.getElementById("detail-modal").classList.remove("open");}
 function tambah(id){
+  const p=data.find(x=>x.id===id);
   const ada=cart.find(c=>c.id===id);
-  if(ada)ada.qty++; else cart.push({...data.find(p=>p.id===id),qty:1});
+  const jmlDiKeranjang=ada?ada.qty:0;
+  if(jmlDiKeranjang>=p.stok)return alert("Maaf, jumlah melebihi sisa stok tersedia!");
+  if(ada)ada.qty++; else cart.push({...p,qty:1});
   updateCart();
 }
 function ubah(id,d){
   const i=cart.findIndex(c=>c.id===id);
+  const p=data.find(x=>x.id===id);
+  if(d>0&&cart[i].qty>=p.stok)return alert("Batas stok maksimal tercapai!");
   cart[i].qty+=d;
   if(cart[i].qty<=0)cart.splice(i,1);
   updateCart();
 }
 function updateCart(){
+  const sub=cart.reduce((s,c)=>s+c.harga*c.qty,0);
+  const ongkir=cart.length?parseInt(document.getElementById("ongkir").value):0;
   document.getElementById("count").innerText=cart.reduce((s,c)=>s+c.qty,0);
-  document.getElementById("total").innerText=rp(cart.reduce((s,c)=>s+c.harga*c.qty,0));
+  document.getElementById("sub").innerText=rp(sub);
+  document.getElementById("ongkir-txt").innerText=rp(ongkir);
+  document.getElementById("total").innerText=rp(sub+ongkir);
   document.getElementById("cart-list").innerHTML=cart.length?cart.map(c=>`
     <div class="item">
       <div><b>${c.nama}</b><br><small>${rp(c.harga)} x ${c.qty}</small></div>
       <div><button onclick="ubah(${c.id},-1)">-</button> ${c.qty} <button onclick="ubah(${c.id},1)">+</button></div>
-    </div>`).join(""):"<p>Keranjang kosong.</p>";
+    </div>`).join(""):"<p style='color:#6b7280;text-align:center'>Keranjang masih kosong.</p>";
 }
-function toggleCart(){document.getElementById("modal").classList.toggle("open");}
+function toggleCart(){document.getElementById("modal").classList.toggle("open");updateCart();}
 function kirimWA(){
-  const n=document.getElementById("nama").value,a=document.getElementById("alamat").value;
-  if(!cart.length||!n||!a)return alert("Isi keranjang, nama, dan alamat terlebih dahulu!");
-  let teks=`Halo BorneoRasa, saya pesan:\n`+cart.map((c,i)=>`${i+1}. ${c.nama} (${c.qty}x) = ${rp(c.harga*c.qty)}`).join("\n")+`\nTotal: ${document.getElementById("total").innerText}\nNama: ${n}\nAlamat: ${a}`;
+  const n=document.getElementById("nama").value.trim(),a=document.getElementById("alamat").value.trim();
+  if(!cart.length||!n||!a)return alert("Harap isi keranjang, nama, dan alamat terlebih dahulu!");
+  const ongkirEl=document.getElementById("ongkir");
+  const areaTxt=ongkirEl.options[ongkirEl.selectedIndex].text;
+  const metode=document.getElementById("metode").value;
+  let teks=`Halo *BorneoRasa UMKM*, saya ingin memesan:\n\n`+cart.map((c,i)=>`${i+1}. ${c.nama} (${c.qty}x) = ${rp(c.harga*c.qty)}`).join("\n")+
+  `\n\nSubtotal: ${document.getElementById("sub").innerText}\nPengiriman: ${areaTxt}\n*Total Bayar: ${document.getElementById("total").innerText}*\nMetode Bayar: *${metode}*\n\n*Data Pembeli:*\nNama: ${n}\nAlamat: ${a}`;
   window.open(`https://wa.me{WA}?text=${encodeURIComponent(teks)}`,"_blank");
 }
-render();updateCart();
-</script>
-</body>
-</html>
+
+// Fitur Ulasan dengan LocalStorage
